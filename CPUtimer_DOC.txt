@@ -1,0 +1,124 @@
+    def start(self):
+        """
+        Inicia a medição/cronometragem
+        
+        Retorna: nada
+        """        
+
+
+    def stop(self):
+        """
+        Pausa a medição/cronometragem
+        
+        Retorna: nada
+        """         
+
+
+
+    def lap(self, start_stopped = False ):
+        """
+        Para a medição/cronometragem atual e inicia uma nova.
+        
+        start_stopped = "FALSE":
+            Imediamente inicia a nova cronometragem
+        start_stopped != "FALSE":
+            A nova cronometragem inicia-se pausada
+            
+        Retorna: nada
+        """  
+
+
+
+    def reset(self):
+        """
+        Reseta variaveis internas e prepara instância da classe para uma
+        nova bateria de cronometragems
+        
+        Retorna: nada
+        """  
+
+
+
+    def get_time(self, reference = "total", unit = "seconds" ):
+        """
+        Retorna a cronometragem armazenada de acordo com a referência e
+        unidade requerida.
+        
+        reference = "total" ou "t":
+            tempo total
+        reference = "average" ou "avg" ou "a":
+            tempo médio
+        reference = "last" ou "l":
+            tempo da última medição
+        reference = "first" ou "f":
+            para detail_level > 0, tempo da primeira medição
+        reference = <inteiro>
+            para detail_level > 0, tempo da medição de numero <inteiro>
+            
+        unit = "seconds" ou "sec" ou "s":
+            retorna a medição em segundos
+        unit = "minutes" ou "min" ou "m":
+            retorna a medição em minutos
+        unit = "hours" ou "hr" ou "h":
+            retorna a medição em horas
+        unit = "milliseconds" ou "millisec" ou "milli" ou "ms":
+            retorna a medição em mili segundos
+        unit = "microseconds" ou "microsec" ou "micro" ou "us":
+            retorna a medição em micro segunds         
+            
+        Retorna: valor da medição requerida em float    
+        """      
+
+
+
+    def get_stamp(self, reference = "total" , style = "clock" , ignore_zeroes = False ):
+        """
+        Retorna um string da estampa de tempo de uma cronometragem de
+        acordo com uma referencia e um estilo definido.
+        
+        reference = "total" ou "t":
+            tempo total
+        reference = "average" ou "avg" ou "a":
+            tempo médio
+        reference = "last" ou "l":
+            tempo da última medição
+        reference = "first" ou "f":
+            para detail_level > 0, tempo da primeira medição
+        reference = <inteiro>
+            para detail_level > 0, tempo da medição de numero <inteiro>
+            
+        style = "clock":
+            formato:
+            HH:mm:ss.SSSS
+            Legenda:
+            <horas>:<minutos>:<segundos>.<milisegundos>      
+        style = "si" ou "SI":
+            formato:
+            <hora>h <minuto>m <segundo>s <milisegundo>ms <microsegundo>us
+            
+        ignore_zeroes = False:
+            Retorna todas as unidades de tempo 
+        ignore_zeroes = True:
+            Não retorna unidades de tempo iguais a zero
+            
+        Retorna: string da estampa de tempo
+        """
+
+
+
+    def auto_loop(self, function, repetitions = 1000000 ):
+        """
+        Mede a função passada várias vezes seguidas
+        Apenas um wrapper da timeit.timeit
+        
+        function = <nome da função>:
+            Função a ser executada
+            
+        repetitions = <inteiro>:
+            Quantidade de vezes a se executar a função
+            
+        Retorna: nada
+        
+        Obs.:
+        A chamada dessa função automaticamente tornará o detail_level = 0
+        """  
