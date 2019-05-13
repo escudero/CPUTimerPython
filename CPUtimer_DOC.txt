@@ -1,6 +1,6 @@
     def start(self):
         """
-        Inicia a medição/cronometragem
+        Inicia a mediï¿½ï¿½o/cronometragem
         
         Retorna: nada
         """        
@@ -8,16 +8,23 @@
 
     def stop(self):
         """
-        Pausa a medição/cronometragem
+        Pausa a mediï¿½ï¿½o/cronometragem
         
         Retorna: nada
         """         
 
+        
+    def remove_last_lap(self):
+        """
+        Remove o Ãºltimo lap, mas sÃ³ pode ser chamado apenas 1x e quando estiver no stop.
+        
+        Retorna: nada
+        """
 
 
     def lap(self, start_stopped = False ):
         """
-        Para a medição/cronometragem atual e inicia uma nova.
+        Para a mediï¿½ï¿½o/cronometragem atual e inicia uma nova.
         
         start_stopped = "FALSE":
             Imediamente inicia a nova cronometragem
@@ -31,7 +38,7 @@
 
     def reset(self):
         """
-        Reseta variaveis internas e prepara instância da classe para uma
+        Reseta variaveis internas e prepara instï¿½ncia da classe para uma
         nova bateria de cronometragems
         
         Retorna: nada
@@ -41,32 +48,32 @@
 
     def get_time(self, reference = "total", unit = "seconds" ):
         """
-        Retorna a cronometragem armazenada de acordo com a referência e
+        Retorna a cronometragem armazenada de acordo com a referï¿½ncia e
         unidade requerida.
         
         reference = "total" ou "t":
             tempo total
         reference = "average" ou "avg" ou "a":
-            tempo médio
+            tempo mï¿½dio
         reference = "last" ou "l":
-            tempo da última medição
+            tempo da ï¿½ltima mediï¿½ï¿½o
         reference = "first" ou "f":
-            para detail_level > 0, tempo da primeira medição
+            para detail_level > 0, tempo da primeira mediï¿½ï¿½o
         reference = <inteiro>
-            para detail_level > 0, tempo da medição de numero <inteiro>
+            para detail_level > 0, tempo da mediï¿½ï¿½o de numero <inteiro>
             
         unit = "seconds" ou "sec" ou "s":
-            retorna a medição em segundos
+            retorna a mediï¿½ï¿½o em segundos
         unit = "minutes" ou "min" ou "m":
-            retorna a medição em minutos
+            retorna a mediï¿½ï¿½o em minutos
         unit = "hours" ou "hr" ou "h":
-            retorna a medição em horas
+            retorna a mediï¿½ï¿½o em horas
         unit = "milliseconds" ou "millisec" ou "milli" ou "ms":
-            retorna a medição em mili segundos
+            retorna a mediï¿½ï¿½o em mili segundos
         unit = "microseconds" ou "microsec" ou "micro" ou "us":
-            retorna a medição em micro segunds         
+            retorna a mediï¿½ï¿½o em micro segunds         
             
-        Retorna: valor da medição requerida em float    
+        Retorna: valor da mediï¿½ï¿½o requerida em float    
         """      
 
 
@@ -79,13 +86,13 @@
         reference = "total" ou "t":
             tempo total
         reference = "average" ou "avg" ou "a":
-            tempo médio
+            tempo mï¿½dio
         reference = "last" ou "l":
-            tempo da última medição
+            tempo da ï¿½ltima mediï¿½ï¿½o
         reference = "first" ou "f":
-            para detail_level > 0, tempo da primeira medição
+            para detail_level > 0, tempo da primeira mediï¿½ï¿½o
         reference = <inteiro>
-            para detail_level > 0, tempo da medição de numero <inteiro>
+            para detail_level > 0, tempo da mediï¿½ï¿½o de numero <inteiro>
             
         style = "clock":
             formato:
@@ -99,7 +106,7 @@
         ignore_zeroes = False:
             Retorna todas as unidades de tempo 
         ignore_zeroes = True:
-            Não retorna unidades de tempo iguais a zero
+            Nï¿½o retorna unidades de tempo iguais a zero
             
         Retorna: string da estampa de tempo
         """
@@ -108,17 +115,17 @@
 
     def auto_loop(self, function, repetitions = 1000000 ):
         """
-        Mede a função passada várias vezes seguidas
+        Mede a funï¿½ï¿½o passada vï¿½rias vezes seguidas
         Apenas um wrapper da timeit.timeit
         
-        function = <nome da função>:
-            Função a ser executada
+        function = <nome da funï¿½ï¿½o>:
+            Funï¿½ï¿½o a ser executada
             
         repetitions = <inteiro>:
-            Quantidade de vezes a se executar a função
+            Quantidade de vezes a se executar a funï¿½ï¿½o
             
         Retorna: nada
         
         Obs.:
-        A chamada dessa função automaticamente tornará o detail_level = 0
+        A chamada dessa funï¿½ï¿½o automaticamente tornarï¿½ o detail_level = 0
         """  
