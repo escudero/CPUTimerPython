@@ -19,8 +19,11 @@ class CPUTimer:
     avarage = 0
     total = 0
     last = 0
+    last_last = 0
     detail_level = 0
     sensor = time.time
+    lap_count = 0
+    can_remove_last_lap = False
     
     # Incializador / Construtor da classe
     def __init__(self , detail_level = 0 ):
@@ -45,6 +48,8 @@ class CPUTimer:
         """        
         if self.start_mark == 0:
             self.start_mark = self.sensor()
+
+        self.lap_count += 1
         
         
     def stop(self):
@@ -61,17 +66,44 @@ class CPUTimer:
                 
             else:
                 # Detail level = 0
+                self.last_last = self.last
                 self.last = self.sensor() - self.start_mark
                 self.total = self.total + self.last
                 
-                if self.avarage > 0:
-                    self.avarage = ( self.avarage + self.last ) / 2
-                else:
-                    self.avarage = self.last
+                # Como recalcular a média adicionando mais um valor sem precisar recalcular tudo?
+                # https://math.stackexchange.com/questions/22348/how-to-add-and-subtract-values-from-an-average/1567345#1567345
+                self.avarage = self.avarage + ((self.last - self.avarage) / (self.lap_count))
+            
+            self.can_remove_last_lap = True
                     
             self.start_mark = 0
+
+
+    def remove_last_lap(self):
+        """
+        Remove o último lap, mas só pode ser chamado apenas 1x e quando estiver no stop.
         
-        
+        Retorna: nada
+        """
+        if self.start_mark == 0 and self.can_remove_last_lap:
+            # Checa nivel de detalhe da medição
+            if self.detail_level > 0:
+                self.times.pop()
+                
+            else:
+                # Detail level = 0
+                self.total = self.total - self.last
+                
+                # Como recalcular a média removendo o último valor sem precisar recalcular tudo?
+                # https://math.stackexchange.com/questions/22348/how-to-add-and-subtract-values-from-an-average/1567345#1567345
+                self.avarage = ((self.avarage * self.lap_count) - self.last) / (self.lap_count - 1)
+
+                self.lap_count -= 1
+                self.last = self.last_last
+            
+            self.can_remove_last_lap = False
+
+
     def lap(self, start_stopped = False ):
         """
         Para a medição/cronometragem atual e inicia uma nova.
@@ -93,7 +125,6 @@ class CPUTimer:
         if start_stopped == False:
             self.start()
 
-
     def reset(self):
         """
         Reseta variaveis internas e prepara instância da classe para uma
@@ -107,6 +138,8 @@ class CPUTimer:
         self.avarage = 0
         self.total = 0
         self.last = 0
+        self.lap_count = 0
+        self.can_remove_last_lap = False
             
 
     def get_time(self, reference = "total", unit = "seconds" ):
@@ -138,34 +171,27 @@ class CPUTimer:
             
         Retorna: valor da medição requerida em float    
         """          
-        
+        ret = None
+
         # Salva o estado do relogio ( parado ou contando )
         state = self.start_mark
         self.stop()                
-            
-        # Salva ultimo elemento 
-        if self.detail_level > 0:
-            lastTime = self.times.pop()
-            ret = lastTime
         
         # Calculo do tipo de retorno: tempo total, ultima marcacao, media
         if reference == "total" or reference == "t":
             if self.detail_level > 0:
-                for t in self.times:
-                    ret = ret + t                 
+                ret = sum(self.times)
             else:
                 ret = self.total
                 
         elif reference == "average" or reference == "avg" or reference == "a":
             if self.detail_level > 0:
-                for t in self.times:
-                    ret = ( ret + t ) / 2
+                ret = sum(self.times) / len(self.times)
             else:
                 ret = self.avarage
-            
         elif reference == "last" or reference == "l":
             if self.detail_level > 0:
-                ret = ret
+                ret = self.times[-1]
             else:
                 ret = self.last
         
@@ -204,10 +230,6 @@ class CPUTimer:
             stamp = stamp + str(int(ret)).zfill(2) + "."
             stamp = stamp + str(int(ret*1000)).zfill(4)
             ret = stamp
-            
-        # Repoe o elemento retirado
-        if self.detail_level > 0:
-            self.times.append(lastTime)
         
         # Retorna o relogio para o estado de antes da chamada da função
         if state != 0:

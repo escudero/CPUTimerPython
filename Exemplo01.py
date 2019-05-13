@@ -26,6 +26,7 @@ for i in range(0, 100000):
     fib(10)
     timer.lap()
 timer.stop()
+timer.remove_last_lap()
 # Imprimindo resultados de diversas formas
 print("Tempo Total: " + str( timer.get_time() ) +" s")
 print("Tempo Medio: " + str( timer.get_time("average","micro") ) +" \u00B5s")
