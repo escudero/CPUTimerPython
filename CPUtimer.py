@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Aug 31 12:20:30 2016
+Edited on Mon May 13 12:30:00 2019
 
 @author: Rafael França ( psyny.rafael@gmail.com )
+@edited: Claudio Escudero
 """
 
 import platform
